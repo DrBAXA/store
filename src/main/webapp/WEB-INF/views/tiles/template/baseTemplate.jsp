@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-theme.min.css">
+  <script src="<c:url value="/resources"/>/jQuery/jquery.min.js"></script>
   <script src="<c:url value="/resources"/>/bootstrap/js/bootstrap.min.js"></script>
   <title>Sombra store</title>
 </head>
