@@ -1,6 +1,7 @@
 package sombra.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,19 +22,22 @@ public class User {
     private String password;
 	
 	@Column(name="reg_date")
-	private Timestamp registrationDate;
+	private Date registrationDate;
 
     @OneToMany
-    @JoinTable(name="baskets")
+    @JoinTable(name="baskets",
+               joinColumns = {@JoinColumn(name = "user_id")},
+               inverseJoinColumns = {@JoinColumn(name = "article_id")})
     private List<Article> basket;
 
     public User() {
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, Date registrationDate) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.registrationDate = registrationDate;
     }
 
     public int getId() {

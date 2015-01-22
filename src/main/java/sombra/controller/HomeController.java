@@ -17,7 +17,6 @@ public class HomeController {
 
 	@RequestMapping(value="/")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
-		userDAO.addUser("user", "user@mail.com", "shbyrfkzkz2");
 		return new ModelAndView("home");
 	}
 }

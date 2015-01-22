@@ -6,6 +6,7 @@ import sombra.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 
 @Repository
 public class UserDAO implements IUserDAO{
@@ -14,8 +15,8 @@ public class UserDAO implements IUserDAO{
     EntityManager entityManager;
 
     @Transactional
-    public void addUser(String name, String email,String password){
-        User user = new User(name, email, password);
+    public void addUser(String name, String email,String password, Date registrationDate){
+        User user = new User(name, email, password, registrationDate);
         entityManager.persist(user);
     }
 }

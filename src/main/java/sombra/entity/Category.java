@@ -16,14 +16,14 @@ public class Category {
 	@Column
 	private String description;
 	
-	@OneToMany(mapedBy=
-	Set<Article> articles;
+	@OneToMany(mappedBy = "category")
+	private Set<Article> articles;
 	
 	@ManyToOne
 	@JoinColumn(name="parent_category")
 	private Category parentCategory;
 	
-	@OneToMany(mapedBy="parentCategory")
+	@OneToMany(mappedBy="parentCategory")
 	Set<Category> categories;
 	
 	
