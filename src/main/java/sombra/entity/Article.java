@@ -21,5 +21,9 @@ public class Article {
 
     @Column
     private int count;
+	
+	@ManyToOne
+	@JoinColumn(name="category")
+	private Category category;
 
 }

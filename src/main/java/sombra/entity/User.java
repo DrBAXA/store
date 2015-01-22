@@ -19,6 +19,9 @@ public class User {
 
     @Column
     private String password;
+	
+	@Column(name="reg_date")
+	private Timestamp registrationDate;
 
     @OneToMany
     @JoinTable(name="baskets")
