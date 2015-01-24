@@ -11,15 +11,24 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">ATM locator</a>
+            <a class="navbar-brand" href="#">Sombra store</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="products"><a class="navbar-link">Products</a></li>
-                <li class="basket"><a class="navbar-link">Basket</a></li>
+                <li class="basket">
+                    <a class="navbar-link" href="/basket">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                        Basket
+                    </a>
+                </li>
             </ul>
             <sec:authorize access="isAuthenticated()">
-                <p class="navbar-text navbar-right">Signed in as <a href="#">${user}</a>(<a href="/logout">logout</a>)</p>
+                <p class="navbar-text navbar-right">
+                    Signed in as <a href="#">${user}</a>(<a href="/logout">logout</a>)
+                </p>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+                <p class="navbar-text navbar-right"><a href="/logout">login</a></p>
             </sec:authorize>
         </div>
     </div>

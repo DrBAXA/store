@@ -4,16 +4,18 @@
 <!Doctype html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-theme.min.css">
-  <script src="<c:url value="/resources"/>/jQuery/jquery.min.js"></script>
-  <script src="<c:url value="/resources"/>/bootstrap/js/bootstrap.min.js"></script>
-  <title>Sombra store</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-theme.min.css">
+    <script src="<c:url value="/resources"/>/jQuery/jquery.min.js"></script>
+    <script src="<c:url value="/resources"/>/bootstrap/js/bootstrap.min.js"></script>
+    <title>Sombra store</title>
 </head>
 <body>
-<tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="content"/>
-<tiles:insertAttribute name="footer"/>
+<div class="container">
+    <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="content"/>
+    <tiles:insertAttribute name="footer"/>
+</div>
 </body>
 </html>
