@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Date;
 
 @Repository
-public class UserDAO implements IUserDAO{
+public class UserDAO{
 
     @PersistenceContext
     EntityManager entityManager;

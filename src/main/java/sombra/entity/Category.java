@@ -1,7 +1,6 @@
 package sombra.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name="categories")
@@ -16,15 +15,39 @@ public class Category {
 	@Column
 	private String description;
 	
-	@OneToMany(mappedBy = "category")
-	private Set<Article> articles;
-	
 	@ManyToOne
 	@JoinColumn(name="parent_category")
 	private Category parentCategory;
-	
-	@OneToMany(mappedBy="parentCategory")
-	Set<Category> categories;
-	
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Category getParentCategory() {
+		return parentCategory;
+	}
+
+	public void setParentCategory(Category parentCategory) {
+		this.parentCategory = parentCategory;
+	}
 }
