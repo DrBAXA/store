@@ -3,6 +3,7 @@ package sombra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -15,6 +16,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "sombra")
 @EnableTransactionManagement
+@Import({SecuriryConfiguration.class, MvcConfiguration.class})
 public class AppContext {
 
     private Properties hibernateProperties(){

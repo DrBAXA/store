@@ -19,7 +19,7 @@
                 <li class="basket"><a class="navbar-link">Basket</a></li>
             </ul>
             <sec:authorize access="isAuthenticated()">
-                <p class="navbar-text navbar-right">Signed in as <a href="#">${user}</a></p>
+                <p class="navbar-text navbar-right">Signed in as <a href="#">${user}</a>(<a href="/logout">logout</a>)</p>
             </sec:authorize>
         </div>
     </div>
