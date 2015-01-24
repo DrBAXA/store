@@ -1,0 +1,9 @@
+.order-element:hover{
+    cursor: pointer;
+}
+
+.price{
+    font-size: x-large;
+    color: #5cb85c;
+    float: right;
+}

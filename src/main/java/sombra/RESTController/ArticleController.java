@@ -7,11 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import sombra.entity.Article;
 import sombra.service.ArticlesService;
 import sombra.util.ArticleField;
-
-import java.util.List;
+import sombra.util.PaginationResult;
 
 @Controller
 @RequestMapping("/articles")
@@ -21,12 +19,12 @@ public class ArticleController {
     ArticlesService articlesService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Article>> getAll(@RequestParam("first") int first,
-                                                @RequestParam("last") int last,
+    public ResponseEntity<PaginationResult> getAll(@RequestParam("first") int first,
+                                                @RequestParam("count") int count,
                                                 @RequestParam("orderby")ArticleField orderBy,
                                                 @RequestParam("down") boolean down
                                                 ){
-        List<Article> result = articlesService.getAll(ArticleField.NAME, false, 0,5);
-        return new ResponseEntity<List<Article>>(result, HttpStatus.OK);
+        PaginationResult result = articlesService.getAll(orderBy, down, first,count);
+        return new ResponseEntity<PaginationResult>(result, HttpStatus.OK);
     }
 }

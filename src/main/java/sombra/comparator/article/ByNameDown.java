@@ -4,11 +4,9 @@ import sombra.entity.Article;
 
 import java.util.Comparator;
 
-public class ByNameDown implements Comparator {
+public class ByNameDown<T extends Article> implements Comparator<Article> {
     @Override
-    public int compare(Object o1, Object o2) {
-        Article article1 = (Article)o1;
-        Article article2 = (Article)o2;
+    public int compare(Article article1, Article article2) {
         int compareIn = article1.getName().compareTo(article2.getName());
         if(compareIn == 0){
             return 0;

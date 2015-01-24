@@ -4,11 +4,42 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/articles.js" ></script>
-<h1>Hello World!</h1>
 
-<a href="#" class="btn btn-primary" role="button" onclick="getArticles()">get all</a>
+<div class="dropdown order-element orderBy" style="display: inline">
+    Сортувати по
+    <a class="dropdown-toggle" id="orderBy" data-toggle="dropdown" aria-expanded="true">
+        назві(за зростанням)
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li class="orderByElement" role="presentation" id="order_1"><a role="menuitem" href="#">назві(за спаданням)</a></li>
+        <li class="orderByElement" role="presentation" id="order_2"><a role="menuitem" href="#">назві(за зростанням)</a></li>
+        <li class="orderByElement" role="presentation" id="order_3"><a role="menuitem" href="#">ціні(за спаданням)</a></li>
+        <li class="orderByElement" role="presentation" id="order_4"><a role="menuitem" href="#">ціні(за зростанням)</a></li>
+    </ul>
+</div>
+<div class="dropdown order-element orderBy" style="display: inline">
+    відобразити на одній сторінці
+    <a class="dropdown-toggle" id="countOnPage" data-toggle="dropdown" aria-expanded="true">
+        10
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li class="countElement" role="presentation" id="count_10"><a role="menuitem" href="#">10</a></li>
+        <li class="countElement" role="presentation" id="count_20"><a role="menuitem" href="#">20</a></li>
+        <li class="countElement" role="presentation" id="count_50"><a role="menuitem" href="#">50</a></li>
+    </ul>
+</div>
+
+<a href="#" class="btn btn-primary" role="button" onclick="updateFilter()">get all</a>
 
 <div class="row" id="articlesContainer">
 
 </div>
+<nav id="paginator" style="display: none">
+    <ul class="pagination">
+        <li id="previous" class="disabled" onclick="previousPage()"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        <li id="next"><a href="#" aria-label="Next" onclick="nexPage()"><span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+</nav>
 
