@@ -2,8 +2,40 @@
     cursor: pointer;
 }
 
-.price{
-    font-size: x-large;
+.price-color, .price{
     color: #5cb85c;
+}
+
+.price{
+    display: inline-block;
+    font-size: x-large;
+    background: cornsilk;
+    padding: 7px 15px;
+    border-radius: 10px;
+}
+
+.price-right{
     float: right;
+}
+
+.description{
+    display: block;
+    max-height: 100px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+}
+
+.description-full{
+display: block;
+}
+
+.article-img{
+    margin-right: 15px;
+}
+
+.info{
+    display: inline;
+    margin: 15px;
 }

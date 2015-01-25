@@ -40,6 +40,10 @@ jQuery(document).on("click", "li.paginationElement", function(event){
     changePage(pageNumber);
 });
 
+jQuery(document).ready(
+    updateBasket()
+);
+
 function changePage(pageNumber){
     jQuery(".paginationElement").removeClass("active");
     jQuery("#page_"+pageNumber).addClass("active");
@@ -130,14 +134,40 @@ function addArticle(article){
                                    '<img src="/resources/img/' + article.photo + '"/>' +
                                    '<div class="caption">' +
                                         '<h3>' + article.name + '</h3>' +
-                                        '<p>' + article.description + '</p>' +
-                                        '<p><a href="#" class="btn btn-primary" role="button">' +
+                                        '<div class="description">' + article.description + '</div>' +
+                                        '<p><a href="/articles/' + article.id + '">детальніше...</a></p>' +
+                                        '<p><a href="#" onclick="addToBasket(' + article.id + ')" class="btn btn-lg btn-success" role="button">' +
                                              '<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>' +
-                                             'Add to basket' +
-                                        '</a><span class="price">' + article.price + '$</span></p>' +
-                                        //'<h3 class="price">' + article.price + '$</h3>' +
+                                             'Купити' +
+                                        '</a><span class="price price-right">' + article.price + '$</span></p>' +
                                    '</div>' +
                               '</div>' +
                          '</div>';
     jQuery("#articlesContainer").append(jQuery.parseHTML(articleElement));
+}
+
+function addToBasket(id){
+    jQuery.ajax({
+        url: "/users/basket/"+id,
+        type: "PUT",
+        statusCode: {
+            200: updateBasket
+        }
+    })
+}
+
+function updateBasket(){
+    jQuery.ajax({
+        url: "/users/basket",
+        type: "GET",
+        dataType: "json",
+        statusCode: {
+            200: fillBasketData
+        }
+    })
+}
+
+function fillBasketData(data){
+    jQuery("#basketCount").text(data.articles.length);
+    jQuery("#basketPrice").text(data.price+'$');
 }

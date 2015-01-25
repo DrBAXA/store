@@ -36,4 +36,8 @@ public class ArticlesService {
         result.setPageData(allArticles.subList(first, last));
         return result;
     }
+
+    public Article getArticle(int id){
+        return articlesDAO.findOne(id);
+    }
 }

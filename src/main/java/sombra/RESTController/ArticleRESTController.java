@@ -13,7 +13,7 @@ import sombra.util.PaginationResult;
 
 @Controller
 @RequestMapping("/articles")
-public class ArticleController {
+public class ArticleRESTController {
 
     @Autowired
     ArticlesService articlesService;

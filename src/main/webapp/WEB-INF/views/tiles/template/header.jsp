@@ -18,17 +18,19 @@
                 <li class="basket">
                     <a class="navbar-link" href="/basket">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                        Basket
+                        Корзина
+                        <strong id="basketCount"></strong>
+                        (<i id="basketPrice" class="price-color"></i>)
                     </a>
                 </li>
             </ul>
             <sec:authorize access="isAuthenticated()">
                 <p class="navbar-text navbar-right">
-                    Signed in as <a href="#">${user}</a>(<a href="/logout">logout</a>)
+                    Ви увійшли як <a href="#">${user}</a>(<a href="/logout">вийти</a>)
                 </p>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <p class="navbar-text navbar-right"><a href="/logout">login</a></p>
+                <p class="navbar-text navbar-right"><a href="/logout">увійти</a></p>
             </sec:authorize>
         </div>
     </div>
