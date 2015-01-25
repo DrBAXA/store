@@ -19,4 +19,8 @@
         <put-attribute name="content" value="/WEB-INF/views/article.jsp"/>
     </definition>
 
+    <definition name="basket" extends="baseTemplate">
+        <put-attribute name="content" value="/WEB-INF/views/basket.jsp"/>
+    </definition>
+
 </tiles-definitions>

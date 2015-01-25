@@ -2,13 +2,13 @@
     cursor: pointer;
 }
 
-.price-color, .price{
+.price-text, .price{
     color: #5cb85c;
+    font-size: x-large;
 }
 
 .price{
     display: inline-block;
-    font-size: x-large;
     background: cornsilk;
     padding: 7px 15px;
     border-radius: 10px;
@@ -38,4 +38,10 @@ display: block;
 .info{
     display: inline;
     margin: 15px;
+}
+
+.doBuy{
+    background: cornsilk;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }

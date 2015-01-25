@@ -35,4 +35,11 @@ public class UserService {
         usersDAO.save(user);
     }
 
+    public void deleteFromBasket(String userName, int articleId){
+        User user = usersDAO.findOne(userName);
+        List<Article> basket = user.getBasket();
+        basket.remove(articlesDAO.findOne(articleId));
+        usersDAO.save(user);
+    }
+
 }

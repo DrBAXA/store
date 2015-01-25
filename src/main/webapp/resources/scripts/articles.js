@@ -50,9 +50,7 @@ jQuery(document).on("click", "li.paginationElement", function(event){
     changePage(pageNumber);
 });
 
-jQuery(document).ready(
-    updateBasket()
-);
+jQuery(document).ready(updateBasket);
 
 function changePage(pageNumber){
     jQuery(".paginationElement").removeClass("active");

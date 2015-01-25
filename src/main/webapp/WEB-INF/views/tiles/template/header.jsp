@@ -11,7 +11,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Sombra store</a>
+            <a class="navbar-brand" href="/">Sombra store</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -20,7 +20,7 @@
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                         Корзина
                         <strong id="basketCount"></strong>
-                        (<i id="basketPrice" class="price-color"></i>)
+                        (<i id="basketPrice" class="price-text"></i>)
                     </a>
                 </li>
             </ul>
@@ -30,7 +30,7 @@
                 </p>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <p class="navbar-text navbar-right"><a href="/logout">увійти</a></p>
+                <p class="navbar-text navbar-right"><a href="/login">увійти</a></p>
             </sec:authorize>
         </div>
     </div>
