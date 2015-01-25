@@ -1,3 +1,13 @@
+var order = {
+    orderby:'NAME',
+    down:false,
+    count:10,
+    first:0
+};
+
+var pagesCount;
+var currentPage = 1;
+
 jQuery(document).on("click", "li.orderByElement", function(event){
     jQuery("#orderBy").text(jQuery(event.currentTarget).text());
     switch (event.currentTarget.id){
@@ -74,15 +84,6 @@ function previousPage(){
     changePage(--currentPage);
 }
 
-var order = {
-    orderby:'NAME',
-    down:false,
-    count:10,
-    first:0
-};
-var pagesCount;
-var currentPage = 1;
-
 function updateFilter(){
     currentPage = 1;
     order.first = 0;
@@ -146,28 +147,3 @@ function addArticle(article){
     jQuery("#articlesContainer").append(jQuery.parseHTML(articleElement));
 }
 
-function addToBasket(id){
-    jQuery.ajax({
-        url: "/users/basket/"+id,
-        type: "PUT",
-        statusCode: {
-            200: updateBasket
-        }
-    })
-}
-
-function updateBasket(){
-    jQuery.ajax({
-        url: "/users/basket",
-        type: "GET",
-        dataType: "json",
-        statusCode: {
-            200: fillBasketData
-        }
-    })
-}
-
-function fillBasketData(data){
-    jQuery("#basketCount").text(data.articles.length);
-    jQuery("#basketPrice").text(data.price+'$');
-}

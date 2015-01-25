@@ -3,6 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
+<script type="application/javascript" src="<c:url value="/resources"/>/scripts/basket.js" ></script>
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/articles.js" ></script>
 
 <div class="dropdown order-element orderBy" style="display: inline">
