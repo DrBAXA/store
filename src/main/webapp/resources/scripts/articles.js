@@ -136,7 +136,7 @@ function addArticle(article){
                                    '<div class="caption">' +
                                         '<h3>' + article.name + '</h3>' +
                                         '<div class="description">' + article.description + '</div>' +
-                                        '<p><a href="/articles/' + article.id + '">детальніше...</a></p>' +
+                                        '<p><a href="#" onclick="articleDetails(' + article.id + ')">детальніше...</a></p>' +
                                         '<p><a href="#" onclick="addToBasket(' + article.id + ')" class="btn btn-lg btn-success" role="button">' +
                                              '<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>' +
                                              'Купити' +
@@ -145,5 +145,10 @@ function addArticle(article){
                               '</div>' +
                          '</div>';
     jQuery("#articlesContainer").append(jQuery.parseHTML(articleElement));
+}
+
+function articleDetails(id){
+    jQuery.cookie("articleId", id);
+    window.location.assign("/articles/details");
 }
 
