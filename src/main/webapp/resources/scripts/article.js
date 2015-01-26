@@ -1,8 +1,11 @@
+/*
+Get saved in cookies articleId and send request for this article
+*/
 jQuery(document).ready(function () {
     var articleId = jQuery.cookie("articleId");
     updateBasket();
     jQuery.ajax({
-        url: "/articles/"+articleId,
+        url: getHomeUrl() + "articles/"+articleId,
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -11,6 +14,9 @@ jQuery(document).ready(function () {
     })
 });
 
+/*
+Fill page by data received from server
+*/
 function fillData(article){
     jQuery("#name").text(article.name);
     jQuery("#photo").attr("src", "/resources/img/"+article.photo);

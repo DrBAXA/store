@@ -1,13 +1,18 @@
+//Variable that describe ordering and pagination 
 var order = {
     orderby:'NAME',
     down:false,
     count:10,
     first:0
 };
-
+//Count pages in pagination
 var pagesCount;
+//Current loaded page(default 1)
 var currentPage = 1;
 
+/*
+Set orderBy property
+*/
 jQuery(document).on("click", "li.orderByElement", function(event){
     jQuery("#orderBy").text(jQuery(event.currentTarget).text());
     switch (event.currentTarget.id){
@@ -30,6 +35,9 @@ jQuery(document).on("click", "li.orderByElement", function(event){
     }
 });
 
+/*
+Set articles count per page
+*/
 jQuery(document).on("click", "li.countElement", function(event){
     jQuery("#countOnPage").text(jQuery(event.currentTarget).text());
     switch (event.currentTarget.id){
@@ -45,13 +53,24 @@ jQuery(document).on("click", "li.countElement", function(event){
     }
 });
 
+/*
+Click on paginator(each page)
+*/
 jQuery(document).on("click", "li.paginationElement", function(event){
     var pageNumber = jQuery(event.currentTarget).attr("pageNumber");
     changePage(pageNumber);
 });
-
+/*
+Udate basket on load page
+If user is logged will be loaded basket info from db(if user has any articles in basket)
+If user isn't logged will be loaded basket info from session
+*/
 jQuery(document).ready(updateBasket);
 
+/*
+Set paginator on new page(by click on page number, previous or next page)
+Load data for new page
+*/
 function changePage(pageNumber){
     jQuery(".paginationElement").removeClass("active");
     jQuery("#page_"+pageNumber).addClass("active");
@@ -82,15 +101,21 @@ function previousPage(){
     changePage(--currentPage);
 }
 
+/*
+updating filter, loading data for first page
+*/
 function updateFilter(){
     currentPage = 1;
     order.first = 0;
     getArticles();
 }
 
+/*
+Send request for articles(by current state of order and paginator) 
+*/
 function getArticles() {
     jQuery.ajax({
-        url: "/articles",
+        url: gethomeUrl()+"articles",
         type: "GET",
         data: order,
         dataType: "json",
@@ -100,6 +125,11 @@ function getArticles() {
     })
 }
 
+/*
+Clear articles from page,
+add new articles
+update paginator
+*/
 function addArticles(data){
     jQuery("#articlesContainer").empty();
     for(var i = 0; i < data.pageData.length; i++){
@@ -111,6 +141,10 @@ function addArticles(data){
 
 }
 
+/*
+Initialize paginator by data received from server, and curent page
+If pages count less then 2 paginator will be hidden
+*/
 function initPaginator(pagesCount){
     jQuery("li").remove(".paginationElement");
 
@@ -127,6 +161,9 @@ function initPaginator(pagesCount){
     }
 }
 
+/*
+Add article to page
+*/
 function addArticle(article){
     var articleElement = '<div class="col-sm-6 col-md-3">' +
                               '<div class="thumbnail">' +
@@ -145,6 +182,10 @@ function addArticle(article){
     jQuery("#articlesContainer").append(jQuery.parseHTML(articleElement));
 }
 
+/*
+On click "datais..." id of article that was clicked writes to cookies
+ and redirect to article details page
+*/
 function articleDetails(id){
     jQuery.cookie("articleId", id);
     window.location.assign("/articles/details");

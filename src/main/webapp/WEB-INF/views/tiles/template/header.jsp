@@ -7,6 +7,10 @@
         $('.${active}').addClass('active');
     });
     </c:if>
+
+	function getHomeUrl(){
+		return '<c:url value="/"/>';
+	}
 </script>
 <nav class="navbar navbar-default">
     <div class="container-fluid">

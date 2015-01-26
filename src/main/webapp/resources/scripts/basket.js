@@ -1,6 +1,10 @@
+
+/*
+Send request to add article with given id to user's basket
+*/
 function addToBasket(id){
     jQuery.ajax({
-        url: "/users/basket/"+id,
+        url: getHomeUrl() + "users/basket/"+id,
         type: "PUT",
         statusCode: {
             200: updateBasket
@@ -8,9 +12,13 @@ function addToBasket(id){
     })
 }
 
+/*
+Send request for basket data from current user
+Basket data is summary price and array with articles id
+*/
 function updateBasket(){
     jQuery.ajax({
-        url: "/users/basket",
+        url: getHomeUrl() +  "/users/basket",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -19,15 +27,22 @@ function updateBasket(){
     })
 }
 
+/*
+Change display basket data in header
+*/
 function fillBasketData(data){
     jQuery("#basketCount").text(data.articles.length);
     jQuery("#basketPrice").text(data.price+'$');
 }
 
+/*
+Send request for Send request for basket data from current user 
+Fill basket page
+*/
 function initBasket(){
     jQuery("#basket").empty();
     jQuery.ajax({
-        url: "/users/basket",
+        url: getHomeUrl() +  "users/basket",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -41,9 +56,12 @@ function initBasket(){
     })
 }
 
+/*
+Send request to get article with given id
+*/
 function getArticleElement(id){
     jQuery.ajax({
-        url: "/articles/"+id,
+        url: getHomeUrl() +  "articles/"+id,
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -52,6 +70,9 @@ function getArticleElement(id){
     })
 }
 
+/*
+Add article element received from server to basket page
+*/
 function addArticleElement(article){
     var element = '<div class="media">' +
                       '<div class="media-left">' +
@@ -71,9 +92,12 @@ function addArticleElement(article){
     jQuery("#basket").append(jQuery.parseHTML(element));
 }
 
+/*
+Send request to delete article from user's basket and update data in header and basket page
+*/
 function deleteFromBasket(id){
     jQuery.ajax({
-        url: "/users/basket/"+id,
+        url: getHomeUrl() + "users/basket/"+id,
         type: "DELETE",
         async: false,
         dataType: "json"
