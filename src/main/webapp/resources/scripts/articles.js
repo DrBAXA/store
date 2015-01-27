@@ -115,7 +115,7 @@ Send request for articles(by current state of order and paginator)
 */
 function getArticles() {
     jQuery.ajax({
-        url: gethomeUrl()+"articles",
+        url: getHomeUrl()+"articles",
         type: "GET",
         data: order,
         dataType: "json",

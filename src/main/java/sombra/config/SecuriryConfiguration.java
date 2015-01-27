@@ -26,6 +26,7 @@ public class SecuriryConfiguration extends WebSecurityConfigurerAdapter{
                                             "JOIN roles ON users.role_id=roles.id AND users.name=?");
     }
 
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()

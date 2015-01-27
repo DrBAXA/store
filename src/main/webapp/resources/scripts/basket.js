@@ -18,7 +18,7 @@ Basket data is summary price and array with articles id
 */
 function updateBasket(){
     jQuery.ajax({
-        url: getHomeUrl() +  "/users/basket",
+        url: getHomeUrl() +  "users/basket",
         type: "GET",
         dataType: "json",
         statusCode: {

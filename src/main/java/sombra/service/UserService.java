@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import sombra.dao.ArticlesDAO;
+import sombra.dao.RolesDAO;
 import sombra.dao.UsersDAO;
 import sombra.entity.Article;
+import sombra.entity.Role;
 import sombra.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +21,9 @@ public class UserService {
     UsersDAO usersDAO;
 
     @Autowired
+    RolesDAO rolesDAO;
+
+    @Autowired
     ArticlesDAO articlesDAO;
 
     public User getUser(int id){
@@ -26,6 +32,12 @@ public class UserService {
 
     public User getUser(String name){
         return usersDAO.findOne(name);
+    }
+
+    public void addUser(User user){
+        user.setRegistrationDate(new Date());
+        user.setRole(getDefaultRole());
+        usersDAO.save(user);
     }
 
     public void addToBasket(String userName, int articleId){
@@ -42,4 +54,7 @@ public class UserService {
         usersDAO.save(user);
     }
 
+    private Role getDefaultRole(){
+        return rolesDAO.findOne("USER");
+    }
 }
