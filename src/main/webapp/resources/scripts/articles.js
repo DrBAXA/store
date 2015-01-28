@@ -1,7 +1,7 @@
 //Variable that describe ordering and pagination 
 var order = {
     orderby:'NAME',
-    down:false,
+    decrease:false,
     count:10,
     first:0
 };
@@ -18,21 +18,24 @@ jQuery(document).on("click", "li.orderByElement", function(event){
     switch (event.currentTarget.id){
         case "order_1":{
             order.orderby = "NAME";
-            order.down = true;
+            order.decrease = true;
         } break;
         case "order_2":{
             order.orderby = "NAME";
-            order.down = false;
+            order.decrease = false;
         } break;
         case "order_3":{
             order.orderby = "PRICE";
-            order.down = true;
+            order.decrease = true;
         } break;
         case "order_4":{
             order.orderby = "PRICE";
-            order.down = false;
+            order.decrease = false;
         }
     }
+    order.first = 0;
+    currentPage = 1;
+    getArticles();
 });
 
 /*
@@ -51,6 +54,9 @@ jQuery(document).on("click", "li.countElement", function(event){
             order.count = 50;
         }
     }
+    order.first = 0;
+    currentPage = 1;
+    getArticles();
 });
 
 /*
@@ -65,7 +71,10 @@ Udate basket on load page
 If user is logged will be loaded basket info from db(if user has any articles in basket)
 If user isn't logged will be loaded basket info from session
 */
-jQuery(document).ready(updateBasket);
+jQuery(document).ready(function(){
+    getArticles();
+    updateBasket();
+});
 
 /*
 Set paginator on new page(by click on page number, previous or next page)

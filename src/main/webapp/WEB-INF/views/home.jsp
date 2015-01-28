@@ -32,8 +32,6 @@
     </ul>
 </div>
 
-<a href="#" class="btn btn-primary" role="button" onclick="updateFilter()">get all</a>
-
 <div class="row" id="articlesContainer">
 
 </div>

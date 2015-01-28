@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name="users")
@@ -36,11 +36,12 @@ public class User {
 	@Column(name="reg_date")
 	private Date registrationDate;
 
-    @OneToMany
-    @JoinTable(name="baskets",
-               joinColumns = {@JoinColumn(name = "user_id")},
-               inverseJoinColumns = {@JoinColumn(name = "article_id")})
-    private List<Article> basket;
+
+    @ElementCollection
+    @CollectionTable(name="baskets", joinColumns = {@JoinColumn(name="user_id")})
+    @Column(name = "count")
+    @MapKeyJoinColumn(name = "article_id")
+    private Map<Article, Integer> basket;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -72,11 +73,11 @@ public class User {
         this.name = name;
     }
 
-    public List<Article> getBasket() {
+    public Map<Article, Integer> getBasket() {
         return basket;
     }
 
-    public void setBasket(List<Article> basket) {
+    public void setBasket(Map<Article, Integer> basket) {
         this.basket = basket;
     }
 

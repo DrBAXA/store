@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 import sombra.dao.ArticlesDAO;
 import sombra.dao.RolesDAO;
 import sombra.dao.UsersDAO;
-import sombra.entity.Article;
 import sombra.entity.Role;
 import sombra.entity.User;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -40,17 +38,7 @@ public class UserService {
         usersDAO.save(user);
     }
 
-    public void addToBasket(String userName, int articleId){
-        User user = usersDAO.findOne(userName);
-        List<Article> basket = user.getBasket();
-        basket.add(articlesDAO.findOne(articleId));
-        usersDAO.save(user);
-    }
-
-    public void deleteFromBasket(String userName, int articleId){
-        User user = usersDAO.findOne(userName);
-        List<Article> basket = user.getBasket();
-        basket.remove(articlesDAO.findOne(articleId));
+    public void updateUser(User user){
         usersDAO.save(user);
     }
 

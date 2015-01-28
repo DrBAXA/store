@@ -45,3 +45,19 @@ display: block;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
+
+#bill{
+    width: 100%;
+}
+
+table#bill tbody tr td{
+    padding: 8px;
+}
+
+table#bill thead tr td, table#bill tfoot tr td{
+    padding-left: 8px;
+}
+
+table#bill tfoot tr td{
+
+}

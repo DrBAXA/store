@@ -18,7 +18,7 @@ Basket data is summary price and array with articles id
 */
 function updateBasket(){
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket",
+        url: getHomeUrl() +  "users/basket_info",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -42,7 +42,7 @@ Fill basket page
 function initBasket(){
     jQuery("#basket").empty();
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket",
+        url: getHomeUrl() +  "users/basket_info",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -101,7 +101,18 @@ function deleteFromBasket(id){
         type: "DELETE",
         async: false,
         dataType: "json"
-    })
+    });
     updateBasket();
     initBasket();
+}
+
+function buy(){
+    jQuery.ajax({
+        url: getHomeUrl() +  "users",
+        type: "GET",
+        dataType: "json",
+        statusCode: {
+            200: addArticleElement
+        }
+    })
 }

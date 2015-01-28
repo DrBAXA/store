@@ -24,9 +24,9 @@ public class ArticleRESTController {
     public ResponseEntity<PaginationResult> getAll(@RequestParam("first") int first,
                                                 @RequestParam("count") int count,
                                                 @RequestParam("orderby")ArticleField orderBy,
-                                                @RequestParam("down") boolean down
+                                                @RequestParam("decrease") boolean decrease
                                                 ){
-        PaginationResult result = articlesService.getAll(orderBy, down, first,count);
+        PaginationResult result = articlesService.getAll(orderBy, decrease, first,count);
         return new ResponseEntity<PaginationResult>(result, HttpStatus.OK);
     }
 

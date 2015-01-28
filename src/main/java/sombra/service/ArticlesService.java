@@ -20,15 +20,15 @@ public class ArticlesService {
     @Autowired
     ArticlesDAO articlesDAO;
 
-    public PaginationResult getAll(ArticleField orderBy, boolean down,  int first, int count){
+    public PaginationResult getAll(ArticleField orderBy, boolean decrease,  int first, int count){
         PaginationResult result = new PaginationResult();
         List<Article> allArticles = new ArrayList<>();
         allArticles.addAll(IteratorUtils.toList(articlesDAO.findAll().iterator()));
         result.setCountAll(allArticles.size());
-        Collections.sort(allArticles, ArticleComparatorFactory.getComparator(orderBy, down));
+        Collections.sort(allArticles, ArticleComparatorFactory.getComparator(orderBy, decrease));
         if(first > allArticles.size()){
             throw new IllegalArgumentException("No result for index "+first);
-        };
+        }
         int last = first+count;
         if(last > allArticles.size()){
             last = allArticles.size();
@@ -40,4 +40,6 @@ public class ArticlesService {
     public Article getArticle(int id){
         return articlesDAO.findOne(id);
     }
+
+
 }
