@@ -24,10 +24,18 @@ public class Article {
 
     @Column
     private String photo;
-	
+
 	@ManyToOne
 	@JoinColumn(name="category")
 	private Category category;
+
+    public Article() {
+    }
+
+    public Article(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
 
     public int getId() {
         return id;
@@ -88,17 +96,17 @@ public class Article {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Article)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Article article = (Article) o;
 
-        if (id != article.id) return false;
+        if (name != null ? !name.equals(article.name) : article.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return name != null ? name.hashCode() : 0;
     }
 }

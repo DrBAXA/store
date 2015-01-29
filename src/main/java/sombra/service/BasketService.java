@@ -1,6 +1,7 @@
 package sombra.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import sombra.entity.Article;
 import sombra.entity.User;
@@ -21,7 +22,7 @@ public class BasketService {
 
 
 
-    public void addToBasket(String userName, int articleId){
+    public void addToBasket(String userName, int articleId, HttpRequest request){
         User user = userService.getUser(userName);
         Map<Article, Integer> basket = user.getBasket();
         Article article = articlesService.getArticle(articleId);
@@ -52,4 +53,7 @@ public class BasketService {
         return null;
     }
 
+    public void addToSessionBasket(HttpRequest request){
+
+    }
 }

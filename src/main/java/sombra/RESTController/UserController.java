@@ -46,7 +46,7 @@ public class UserController {
                                            Principal user,
                                            HttpServletRequest request) {
         if (user != null) {
-            basketService.addToBasket(user.getName(), articleId);
+            basketService.addToBasket(user.getName(), articleId, request);
         }
         BasketInfo sessionBasket = (BasketInfo) request.getSession().getAttribute("basket");
         if (sessionBasket == null) {
