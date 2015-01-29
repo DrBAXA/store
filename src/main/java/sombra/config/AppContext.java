@@ -10,6 +10,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.ValidationMode;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -46,6 +47,7 @@ public class AppContext {
         entityManagerFactoryBean.setPackagesToScan("sombra/entity", "sombra/dao");
         entityManagerFactoryBean.setPersistenceProviderClass(org.hibernate.jpa.HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+        entityManagerFactoryBean.setValidationMode(ValidationMode.NONE);
         return entityManagerFactoryBean;
     }
 

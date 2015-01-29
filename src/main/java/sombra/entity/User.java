@@ -1,5 +1,9 @@
 package sombra.entity;
 
+import org.hibernate.validator.constraints.Email;
+import sombra.validator.Unique;
+import sombra.validator.UniqueField;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -18,15 +22,21 @@ public class User {
     @Column
     @NotNull(message = "Поле логін не може бути пустим!")
     @Size(min = 4, message = "Логін повинен складатись не менш ніж з 4 символів!")
-    @Pattern(regexp = "^(\\w){3,}$",
-    message = "Логін повинен складатись з латинських літер!")
+    @Pattern(regexp = "^(\\w){3,}$", message = "Логін повинен складатись з латинських літер!")
+    @Unique(field = UniqueField.NAME, message = "Користувач з таким іменем вже зареєстрований")
     private String name;
 
     @Column
     @NotNull
-    @Pattern(regexp = "^[A-Za-z]([A-Za-z0-9])+([\\.\\-\\_]?[A-Za-z0-9]+)*@([a-z0-9-])+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$",
-    message = "Така адреса електронної пошти не існує!")
+    @Email(message = "Така адреса електронної пошти не існує!")
+    @Unique(field = UniqueField.EMAIL, message = "Користувач з такою адресою електронної пошти вже зареєстрований")
     private String email;
+
+    @Column
+    @NotNull
+    @Pattern(regexp = "^\\+380[0-9]{9}$", message = "Такий телефон не існує")
+    @Unique(field = UniqueField.PHONE, message = "Користувач з таким номером телефону вже зареєстрований")
+    private String phone;
 
     @Column
     @NotNull
@@ -87,6 +97,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {

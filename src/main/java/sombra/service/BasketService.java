@@ -1,11 +1,9 @@
 package sombra.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import sombra.entity.Article;
 import sombra.entity.User;
-import sombra.util.BasketInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -14,46 +12,51 @@ import java.util.Map;
 @Service
 public class BasketService {
 
+    public static String SESSION_ATTRIBUTE_BASKET = "basket";
+
     @Autowired
     ArticlesService articlesService;
 
     @Autowired
     UserService userService;
 
+    public Map<Article, Integer> getBasket(String userName, HttpServletRequest request){
+        Map<Article, Integer> basket = null;
+        if(userName != null) {
+            basket = userService.getUser(userName).getBasket();
+        } else if(request.getSession().getAttribute(SESSION_ATTRIBUTE_BASKET) != null) {
+            basket = (Map<Article, Integer>)request.getSession().getAttribute(SESSION_ATTRIBUTE_BASKET);
+        } else{
+            basket = new HashMap<>();
+        }
+        return basket;
+    }
 
-
-    public void addToBasket(String userName, int articleId, HttpRequest request){
-        User user = userService.getUser(userName);
-        Map<Article, Integer> basket = user.getBasket();
+    public void addToBasket(String userName,HttpServletRequest request, int articleId){
+        Map<Article, Integer> basket = getBasket(userName, request);
         Article article = articlesService.getArticle(articleId);
         if(basket.containsKey(article)){
             basket.put(article, basket.get(article)+1);
         } else {
             basket.put(article, 1);
         }
-        userService.updateUser(user);
+        updateBasket(userName, request, basket);
     }
 
-    //TODO implement counting
-    public void deleteFromBasket(String userName, int articleId){
-        User user = userService.getUser(userName);
-        Map<Article, Integer> basket = user.getBasket();
-        basket.remove(articlesService.getArticle(articleId));
-        userService.updateUser(user);
+    public void deleteFromBasket(String userName,HttpServletRequest request, int articleId){
+        Map<Article, Integer> basket = getBasket(userName, request);
+        Article article = articlesService.getArticle(articleId);
+        basket.remove(article);
+        updateBasket(userName, request, basket);
     }
 
-    public Map<Article, Integer> getSessionBasket(HttpServletRequest request) {
-        Map<Article, Integer> basket = new HashMap<>();
-        BasketInfo basketInfo = (BasketInfo)request.getSession().getAttribute("basket");
-        if(basketInfo != null){
-            for(Integer id: basketInfo.getArticles().keySet()){
-                basket.put(articlesService.getArticle(id), basketInfo.getArticles().get(id));
-            }
+    private void updateBasket(String userName, HttpServletRequest request, Map<Article, Integer> basket){
+        if(userName != null) {
+            User user = userService.getUser(userName);
+            user.setBasket(basket);
+            userService.updateUser(user);
+        } else{
+            request.getSession().setAttribute(SESSION_ATTRIBUTE_BASKET, basket);
         }
-        return null;
-    }
-
-    public void addToSessionBasket(HttpRequest request){
-
     }
 }

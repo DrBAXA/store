@@ -11,6 +11,12 @@ import sombra.entity.User;
 public interface UsersDAO extends CrudRepository<User, Integer>{
 
     @Query("FROM User WHERE name=?")
-    public User findOne(String name);
+    User findOne(String name);
+
+    Long countByName(String name);
+
+    Long countByEmail(String name);
+
+    Long countByPhone(String name);
 
 }
