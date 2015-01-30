@@ -1,11 +1,15 @@
 package sombra.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,24 +23,35 @@ import java.util.Properties;
 @ComponentScan(basePackages = "sombra")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "sombra.dao")
+@org.springframework.context.annotation.PropertySource("classpath:resources/properties/*.properties")
 @Import({SecuriryConfiguration.class, MvcConfiguration.class})
 public class AppContext {
 
+    @Autowired
+    Environment env;
+
     private Properties hibernateProperties(){
         Properties properties = new Properties();
-        properties.put("hibernate.show_sql","true");
-        properties.put("hibernate.dialect","org.hibernate.dialect.MySQL5Dialect");
+        properties.put("hibernate.show_sql",env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.dialect",env.getProperty("hibernate.dialect"));
         return properties;
     };
+
+    private Properties mailProperties(){
+        Properties properties = new Properties();
+        properties.setProperty("mail.smtp.auth", env.getProperty("mail.smtp.auth"));
+        properties.setProperty("mail.smtp.starttls.enable", env.getProperty("mail.smtp.starttls.enable"));
+        return properties;
+    }
 
 
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/sombrastore?characterEncoding=utf8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
+        dataSource.setUrl(env.getProperty("jdbc.host"));
+        dataSource.setUsername(env.getProperty("jdbc.user"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
         return dataSource;
     }
 
@@ -56,5 +71,16 @@ public class AppContext {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
+    }
+
+    @Bean
+    public JavaMailSender mailSender(){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(env.getProperty("mail.host"));
+        mailSender.setPort(Integer.parseInt(env.getProperty("mail.port")));
+        mailSender.setUsername(env.getProperty("mail.user"));
+        mailSender.setPassword(env.getProperty("mail.password"));
+        mailSender.setJavaMailProperties(mailProperties());
+        return mailSender;
     }
 }
