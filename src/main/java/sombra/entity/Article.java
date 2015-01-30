@@ -20,9 +20,6 @@ public class Article {
     private int price;
 
     @Column
-    private int count;
-
-    @Column
     private String photo;
 
 	@ManyToOne
@@ -67,14 +64,6 @@ public class Article {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public String getPhoto() {
