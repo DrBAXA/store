@@ -216,13 +216,22 @@ function checkValidData(){
 }
 
 function doBuy(){
+    var postData = {
+        email : jQuery("#email").val(),
+        phone : jQuery("#phone").val()
+    };
     jQuery.ajax({
-        url: getHomeUrl() +  "users//basket/buy",
+        url: getHomeUrl() +  "users/basket/buy",
         type: "POST",
+        data : postData,
         dataType: "json",
         statusCode: {
             200: function(data){
-                addToBill(data, count, position)
+                $("#buyModal").modal("hide");
+                $("#succes-modal").modal("show");
+                $('#succes-modal').on('hidden.bs.modal', function (e) {
+                    window.location=getHomeUrl();
+                })
             }
         }
     })

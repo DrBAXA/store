@@ -48,17 +48,18 @@ public class EmailCreator {
     }
 
     //Method for creating e-mail message to customer that made order
-    public String buyEmail(Map<Article, Integer> basket){
+    public String buyEmail(Map<Article, Integer> basket, String phone){
         logger.info("Loading email message template from buy_template.st");
         ST template = stGroup.getInstanceOf("buy_template");
         StringBuilder articlesString = new StringBuilder();
         int price = 0;
         for(Article article: basket.keySet()){
-            articlesString.append(article.getName() + " : " + basket.get(article) +  "\n");
+            articlesString.append(article.getName() + " : " + basket.get(article) +  "шт.\n");
             price += article.getPrice()*basket.get(article);
         }
         template.add("articles", articlesString);
         template.add("price", price);
+        template.add("phone", phone);
         return template.render();
     }
 

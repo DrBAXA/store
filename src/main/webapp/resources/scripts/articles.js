@@ -174,7 +174,7 @@ function initPaginator(pagesCount){
 Add article to page
 */
 function addArticle(article){
-    var articleElement = '<div class="col-sm-6 col-md-3">' +
+    var articleElement = '<div class="col-sm-6 col-md-4">' +
                               '<div class="thumbnail">' +
                                    '<img src="/resources/img/' + article.photo + '"/>' +
                                    '<div class="caption">' +

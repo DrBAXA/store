@@ -78,10 +78,9 @@ public class UserController {
                                       Principal user,
                                       HttpServletRequest request) throws MessagingException {
         String userName = user != null ? user.getName() : null;
-        String userEmail = email;
-        basketService.buy(userName,email, phone, request);
         Map<Article, Integer> basket = basketService.getBasket(userName, request);
-        mailService.sendMail(email,"Замовлення на SombraStore", emailCreator.buyEmail(basket));
+        mailService.sendMail(email,"Замовлення на SombraStore", emailCreator.buyEmail(basket, phone));
+        basketService.buy(userName,email, phone, request);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
