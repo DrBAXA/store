@@ -2,7 +2,9 @@ package sombra.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sombra.dao.OrdersDAO;
 import sombra.entity.Article;
+import sombra.entity.Order;
 import sombra.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,10 @@ public class BasketService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    OrdersDAO ordersDAO;
+
+    @SuppressWarnings("unchecked")
     public Map<Article, Integer> getBasket(String userName, HttpServletRequest request){
         Map<Article, Integer> basket = null;
         if(userName != null) {
@@ -48,6 +54,27 @@ public class BasketService {
         Article article = articlesService.getArticle(articleId);
         basket.remove(article);
         updateBasket(userName, request, basket);
+    }
+
+    public void buy(String userName, String email, String phone, HttpServletRequest request){
+        Map<Article, Integer> basket = clearBasket(userName, request);
+        Order order = new Order(email, phone, basket);
+        ordersDAO.save(order);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<Article, Integer> clearBasket(String userName, HttpServletRequest request){
+        Map<Article, Integer> basket = new HashMap<>();
+        if(userName != null) {
+            Map<Article, Integer> userBasket = userService.getUser(userName).getBasket();
+                basket.putAll(userBasket);
+                userBasket.clear();
+        } else if(request.getSession().getAttribute(SESSION_ATTRIBUTE_BASKET) != null) {
+            Map<Article, Integer> sessionBasket = (Map<Article, Integer>) request.getSession().getAttribute(SESSION_ATTRIBUTE_BASKET);
+            basket.putAll(sessionBasket);
+            request.getSession().removeAttribute("basket");
+        }
+        return basket;
     }
 
     private void updateBasket(String userName, HttpServletRequest request, Map<Article, Integer> basket){

@@ -126,9 +126,14 @@ function buyWindow(){
         type: "GET",
         dataType: "json",
         statusCode: {
-            200: fillUserData
+            200: fillUserData,
+            404: function(){
+                jQuery("#buyButton").attr("disabled", true);
+                jQuery("#emailError").css("display", "block");
+                jQuery("#phoneError").css("display", "block");
+            }
         }
-    })
+    });
 
     //send request for basket data
     jQuery.ajax({
@@ -153,8 +158,8 @@ function buyWindow(){
 }
 
 function fillUserData(user){
-    jQuery("#email").text(user.email);
-    jQuery("#phone").text(user.phone);
+    jQuery("#email").val(user.email);
+    jQuery("#phone").val(user.phone);
 }
 
 function getBillElement(id, count, position){
@@ -178,4 +183,47 @@ function addToBill(article, count, position){
                           '<td>' + article.price + '</td>' +
                       '</tr>';
     jQuery("#bill-positions").append(jQuery.parseHTML(billElement));
+}
+
+function validateEmail(){
+    var regExp = /^[A-Za-z]([A-Za-z0-9])+([\.\-\_]?[A-Za-z0-9]+)*@([a-z0-9-])+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+    if(regExp.test(jQuery("#email").val())){
+        jQuery("#emailError").css("display", "none");
+        return true;
+    }else{
+        jQuery("#emailError").css("display", "block");
+        return false;
+    }
+}
+
+function validatePhone(){
+    var regExp = /^\+380[0-9]{9}$/;
+    if(regExp.test(jQuery("#phone").val())){
+        jQuery("#phoneError").css("display", "none");
+        return true;
+    }else{
+        jQuery("#phoneError").css("display", "block");
+        return false;
+    }
+}
+
+function checkValidData(){
+    if(validateEmail() && validatePhone()){
+        jQuery("#buyButton").attr("disabled", false)
+    }else{
+        jQuery("#buyButton").attr("disabled", true)
+    }
+}
+
+function doBuy(){
+    jQuery.ajax({
+        url: getHomeUrl() +  "users//basket/buy",
+        type: "POST",
+        dataType: "json",
+        statusCode: {
+            200: function(data){
+                addToBill(data, count, position)
+            }
+        }
+    })
 }

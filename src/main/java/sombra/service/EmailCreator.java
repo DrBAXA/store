@@ -18,22 +18,22 @@ import java.util.Map;
 @Service
 public class EmailCreator {
 
-    private final Logger logger = Logger.getLogger(EmailCreator.class.getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     private String dirPath;
     private STGroup stGroup;
 
     private final static char TEMPLATE_DELIMITER = '#';
 
-    public EmailCreator(String path){
+    public EmailCreator(){
         //creating template group  from files in dir
         try {
-            dirPath = new ClassPathResource(path).getURI().getPath();
+            dirPath = new ClassPathResource("email_templates").getURI().getPath();
             logger.info("Loading StringTemplateGroup from dir "+dirPath);
             stGroup = new STRawGroupDir(dirPath, TEMPLATE_DELIMITER, TEMPLATE_DELIMITER);
             stGroup.encoding = "UTF-8";
         }catch (IOException ioe){
-            logger.fatal("Can't load StringTemplateGroup from dir " + dirPath);
+            logger.error("Can't load StringTemplateGroup from dir " + dirPath);
         }
 
     }

@@ -7,14 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import sombra.entity.Article;
 import sombra.entity.User;
-import sombra.service.ArticlesService;
-import sombra.service.BasketService;
-import sombra.service.UserService;
+import sombra.service.*;
 import sombra.util.BasketInfo;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/users")
@@ -28,6 +30,12 @@ public class UserController {
 
     @Autowired
     BasketService basketService;
+
+    @Autowired
+    MailService mailService;
+
+    @Autowired
+    EmailCreator emailCreator;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<User> getUser(Principal user) {
@@ -64,5 +72,16 @@ public class UserController {
         return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
-    //TODO change count of articles
+    @RequestMapping(value = "/basket/buy", method = RequestMethod.POST)
+    public ResponseEntity<Void> doBuy(@RequestParam("email") String email,
+                                      @RequestParam("phone") String phone,
+                                      Principal user,
+                                      HttpServletRequest request) throws MessagingException {
+        String userName = user != null ? user.getName() : null;
+        String userEmail = email;
+        basketService.buy(userName,email, phone, request);
+        Map<Article, Integer> basket = basketService.getBasket(userName, request);
+        mailService.sendMail(email,"Замовлення на SombraStore", emailCreator.buyEmail(basket));
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

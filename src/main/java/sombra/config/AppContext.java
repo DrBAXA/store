@@ -1,10 +1,7 @@
 package sombra.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.ValidationMode;
 import javax.sql.DataSource;
+import java.security.Security;
 import java.util.Properties;
 
 
@@ -23,7 +21,11 @@ import java.util.Properties;
 @ComponentScan(basePackages = "sombra")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "sombra.dao")
-@org.springframework.context.annotation.PropertySource("classpath:resources/properties/*.properties")
+@PropertySources({
+        @PropertySource("classpath:properties/hibernate.properties"),
+        @PropertySource("classpath:properties/jdbc.properties"),
+        @PropertySource("classpath:properties/mail.properties")
+})
 @Import({SecuriryConfiguration.class, MvcConfiguration.class})
 public class AppContext {
 
@@ -75,11 +77,14 @@ public class AppContext {
 
     @Bean
     public JavaMailSender mailSender(){
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(env.getProperty("mail.host"));
         mailSender.setPort(Integer.parseInt(env.getProperty("mail.port")));
         mailSender.setUsername(env.getProperty("mail.user"));
         mailSender.setPassword(env.getProperty("mail.password"));
+        mailSender.setDefaultEncoding("utf8");
+        mailSender.setProtocol("smtp");
         mailSender.setJavaMailProperties(mailProperties());
         return mailSender;
     }

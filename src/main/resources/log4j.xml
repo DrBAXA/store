@@ -10,15 +10,16 @@
     </layout>
 </appender>
 
-    <!-- Controlers Logs -->
-    <logger name="sombra">
-        <level value="INFO"/>
+    <!-- Services logs -->
+    <logger name="sombra.service">
+        <level value="info"/>
         <appender-ref ref="console"/>
     </logger>
 
-<root>
-        <priority value="info"></priority>
+    <!-- Spring logs -->
+    <logger name="org.springframework">
+        <level value="warn" />
         <appender-ref ref="console"/>
-        <appender-ref ref="rootFileAppender"/>
-</root>
+    </logger>
+
 </log4j:configuration>

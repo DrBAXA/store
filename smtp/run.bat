@@ -1,0 +1,1 @@
+java -jar fakeSMTP-1.12.jar -p 2525 -a 127.0.0.1 -o D:\tmp\mail
