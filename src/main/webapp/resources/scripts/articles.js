@@ -85,11 +85,6 @@ jQuery(document).ready(function(){
 });
 
 function initPriceFilter(){
-    var postData = {
-        priceMin : 0,
-        priceMax:1000000,
-        categories : JSON.stringify(filter.categories)
-    };
     jQuery.ajax({
         url: getHomeUrl()+"articles/price_limit",
         type: "POST",
@@ -98,10 +93,13 @@ function initPriceFilter(){
         dataType: "json",
         statusCode: {
             200: function(data){
-                jQuery("#priceFilter").attr("data-slider-min", data.priceMin);
-                jQuery("#priceFilter").attr("data-slider-max", data.priceMax);
-                jQuery("#priceFilter").attr("data-slider-value", "[" + data.priceMin + "," + data.priceMax + "]");
-                jQuery("#priceFilter").slider({tooltip: 'always'});
+                jQuery("#priceFilter").slider("destroy");
+                jQuery("#priceFilter").slider({
+                    tooltip: 'always',
+                    min: data.priceMin,
+                    max: data.priceMax,
+                    value: [ data.priceMin , data.priceMax ]
+                });
 
             }
         }
@@ -174,6 +172,7 @@ function updateFilter(){
     currentPage = 1;
     order.first = 0;
     getArticles();
+    initPriceFilter();
 }
 
 /*
