@@ -9,8 +9,7 @@ import sombra.dao.ArticlesDAO;
 import sombra.dao.CategoriesDAO;
 import sombra.entity.Article;
 import sombra.entity.Category;
-import sombra.util.ArticleField;
-import sombra.util.PaginationResult;
+import sombra.util.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,20 +24,23 @@ public class ArticlesService {
     @Autowired
     CategoriesDAO categoriesDAO;
 
-    public PaginationResult getAll(ArticleField orderBy, boolean decrease,  int first, int count){
+    public PaginationResult getAll(FilterOrder filterOrder){
         PaginationResult result = new PaginationResult();
         List<Article> allArticles = new ArrayList<>();
-        allArticles.addAll(IteratorUtils.toList(articlesDAO.findAll().iterator()));
+        ArticleFilter filter = filterOrder.getFilter();
+        Iterable<Article> queryResult =  articlesDAO.getByFilter(filter.getCategories(), filter.getPriceMin(), filter.getPriceMax());
+        allArticles.addAll(IteratorUtils.toList(queryResult.iterator()));
         result.setCountAll(allArticles.size());
-        Collections.sort(allArticles, ArticleComparatorFactory.getComparator(orderBy, decrease));
-        if(first > allArticles.size()){
-            throw new IllegalArgumentException("No result for index "+first);
+        ArticleOrder order = filterOrder.getOrder();
+        Collections.sort(allArticles, ArticleComparatorFactory.getComparator(order.getOrderBy(), order.getDecrease()));
+        if(order.getFirst() > allArticles.size()){
+            throw new IllegalArgumentException("No result for index "+order.getFirst());
         }
-        int last = first+count;
+        int last = order.getFirst()+order.getCount();
         if(last > allArticles.size()){
             last = allArticles.size();
         }
-        result.setPageData(allArticles.subList(first, last));
+        result.setPageData(allArticles.subList(order.getFirst(), last));
         return result;
     }
 
@@ -53,4 +55,11 @@ public class ArticlesService {
         }
         return categories;
     }
+
+    public PriceLimit getPriseLimit(ArticleFilter filter){
+        int max = articlesDAO.getMaxPrice(filter.getCategories());
+        int min = articlesDAO.getMinPrice(filter.getCategories());
+        return new PriceLimit(min, max);
+    }
+
 }

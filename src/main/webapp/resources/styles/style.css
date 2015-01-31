@@ -78,3 +78,11 @@ li span i {
 .tree > ul{
     padding-left: 0
 }
+
+.price-filter{
+    margin-bottom: 10px;
+}
+
+.category-checker{
+    margin-right: 5px;
+}

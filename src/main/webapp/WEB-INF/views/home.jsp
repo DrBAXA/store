@@ -3,6 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
+<link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-slider.css">
+<script type="application/javascript" src="<c:url value="/resources"/>/bootstrap/js/bootstrap-slider.js" ></script>
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/basket.js" ></script>
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/articles.js" ></script>
 <div class="row">
@@ -12,11 +14,17 @@
                 <h3 class="panel-title">Фільтр</h3>
             </div>
             <div class="panel-body">
+                <div class="price-filter">
+                    <h4>Ціна</h4>
+                    <input id="priceFilter" type="text" class="span2" value="" data-slider-min="" data-slider-max="" data-slider-step="5" data-slider-value=""/>
+                </div>
                 <div class="tree">
+                    <h4>Категорії</h4>
                     <ul id="categories">
 
                     </ul>
                 </div>
+                <button class="btn btn-primary" onclick="updateFilter()" style="float: right">Оновити фільтр</button>
             </div>
         </div>
     </div>

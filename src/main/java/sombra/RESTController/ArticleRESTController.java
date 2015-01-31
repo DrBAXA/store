@@ -4,15 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import sombra.entity.Article;
 import sombra.entity.Category;
 import sombra.service.ArticlesService;
-import sombra.util.ArticleField;
-import sombra.util.PaginationResult;
+import sombra.util.*;
 
 import java.util.List;
 
@@ -23,13 +19,9 @@ public class ArticleRESTController {
     @Autowired
     ArticlesService articlesService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<PaginationResult> getAll(@RequestParam("first") int first,
-                                                @RequestParam("count") int count,
-                                                @RequestParam("orderby")ArticleField orderBy,
-                                                @RequestParam("decrease") boolean decrease
-                                                ){
-        PaginationResult result = articlesService.getAll(orderBy, decrease, first,count);
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<PaginationResult> getAll(@RequestBody FilterOrder filterOrder){
+        PaginationResult result = articlesService.getAll(filterOrder);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -41,5 +33,11 @@ public class ArticleRESTController {
     @RequestMapping("/categories")
     public ResponseEntity<List<Category>> getCategories(){
         return new ResponseEntity<>(articlesService.getRootCategories(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "price_limit", method = RequestMethod.POST)
+    public ResponseEntity<PriceLimit> getPriceLimit(@RequestBody ArticleFilter filter){
+        //articlesService.getPriseLimit(filter);
+        return new ResponseEntity<PriceLimit>(articlesService.getPriseLimit(filter), HttpStatus.OK);
     }
 }

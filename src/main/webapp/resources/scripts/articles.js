@@ -1,9 +1,15 @@
 //Variable that describe ordering and pagination 
 var order = {
-    orderby:'NAME',
+    orderBy:'NAME',
     decrease:false,
     count:10,
     first:0
+};
+
+var filter = {
+    priceMin : 0,
+    priceMax:1000000,
+    categories: []
 };
 //Count pages in pagination
 var pagesCount;
@@ -17,25 +23,25 @@ jQuery(document).on("click", "li.orderByElement", function(event){
     jQuery("#orderBy").text(jQuery(event.currentTarget).text());
     switch (event.currentTarget.id){
         case "order_1":{
-            order.orderby = "NAME";
+            order.orderBy = "NAME";
             order.decrease = true;
         } break;
         case "order_2":{
-            order.orderby = "NAME";
+            order.orderBy = "NAME";
             order.decrease = false;
         } break;
         case "order_3":{
-            order.orderby = "PRICE";
+            order.orderBy = "PRICE";
             order.decrease = true;
         } break;
         case "order_4":{
-            order.orderby = "PRICE";
+            order.orderBy = "PRICE";
             order.decrease = false;
         }
     }
     order.first = 0;
     currentPage = 1;
-    getArticles();
+    updateFilter();
 });
 
 /*
@@ -56,7 +62,7 @@ jQuery(document).on("click", "li.countElement", function(event){
     }
     order.first = 0;
     currentPage = 1;
-    getArticles();
+    updateFilter();
 });
 
 /*
@@ -72,10 +78,35 @@ If user is logged will be loaded basket info from db(if user has any articles in
 If user isn't logged will be loaded basket info from session
 */
 jQuery(document).ready(function(){
+    initCategories();
+    initPriceFilter();
     getArticles();
     updateBasket();
-    initCategories();
 });
+
+function initPriceFilter(){
+    var postData = {
+        priceMin : 0,
+        priceMax:1000000,
+        categories : JSON.stringify(filter.categories)
+    };
+    jQuery.ajax({
+        url: getHomeUrl()+"articles/price_limit",
+        type: "POST",
+        data: JSON.stringify(filter),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        statusCode: {
+            200: function(data){
+                jQuery("#priceFilter").attr("data-slider-min", data.priceMin);
+                jQuery("#priceFilter").attr("data-slider-max", data.priceMax);
+                jQuery("#priceFilter").attr("data-slider-value", "[" + data.priceMin + "," + data.priceMax + "]");
+                jQuery("#priceFilter").slider({tooltip: 'always'});
+
+            }
+        }
+    })
+}
 
 function initTree(){
     jQuery('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
@@ -131,6 +162,15 @@ function previousPage(){
 updating filter, loading data for first page
 */
 function updateFilter(){
+    filter.priceMax = jQuery("#priceFilter").attr("value").split(",")[1];
+    filter.priceMin = jQuery("#priceFilter").attr("value").split(",")[0];
+    filter.categories = [];
+    var categoryCheckers = jQuery(document).find("input.category-checker");
+    for(var i = 0; i < categoryCheckers.length; i++){
+        if(jQuery(categoryCheckers[i]).prop('checked')){
+            filter.categories.push(jQuery(categoryCheckers[i]).prop("id"))
+        }
+    }
     currentPage = 1;
     order.first = 0;
     getArticles();
@@ -140,10 +180,16 @@ function updateFilter(){
 Send request for articles(by current state of order and paginator) 
 */
 function getArticles() {
+
+    var postData = {
+        order: order,
+        filter: filter
+    };
     jQuery.ajax({
         url: getHomeUrl()+"articles",
-        type: "GET",
-        data: order,
+        type: "POST",
+        data: JSON.stringify(postData),
+        contentType: "application/json; charset=utf-8",
         dataType: "json",
         statusCode: {
             200: addArticles
@@ -222,6 +268,7 @@ function initCategories(){
     jQuery.ajax({
         url: getHomeUrl()+"articles/categories",
         type: "GET",
+        async:false,
         dataType: "json",
         statusCode: {
            200: function(data){
@@ -231,14 +278,40 @@ function initCategories(){
                initTree();
            }
         }
+    });
+
+    jQuery(document).on("click", ".category-checker", function(event){
+        var id = jQuery(event.currentTarget).attr("id")*1;
+
+        if(jQuery(event.currentTarget).prop('checked')){
+            filter.categories.push(id);
+            jQuery(event.currentTarget).parents().eq(2).find("input.category-checker").prop("checked", true);
+        }else{
+            uncheckParent(event.currentTarget);
+            var index = filter.categories.indexOf(id);
+            if (index > -1) {
+                filter.categories.splice(index, 1);
+            }
+        }
     })
 }
 
+function uncheckParent(element){
+    var levels = jQuery(element).parents("li.parent_li");
+    for(var i = 0; i < levels.length; i++){
+        var parent_checker = jQuery(levels[i]).find("span  span.tree-item  input.category-checker")[0];
+        jQuery(parent_checker).prop("checked", false);
+    }
+    jQuery(element).parents().eq(2).find("input.category-checker").prop("checked", false);
+}
+
 function addCategory(container, category){
+    filter.categories.push(category.id);
     var treeElementHeaderHtml = '<span>' +
                                     '<i class="glyphicon glyphicon-minus-sign"></i>' +
                                     '<span class="tree-item">' +
-                                        '<input type="checkbox" style="margin-right: 5px">' + category.name +
+                                        '<input type="checkbox" class="category-checker" checked="true" id="' + category.id + '">' +
+                                        category.name +
                                     '</span>' +
                                 '</span>';
     var treeElementHeader = jQuery.parseHTML(treeElementHeaderHtml);

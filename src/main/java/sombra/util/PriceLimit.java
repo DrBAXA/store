@@ -1,13 +1,19 @@
 package sombra.util;
 
-import java.util.Set;
-
-public class ArticleFilter {
+public class PriceLimit {
     private int priceMin;
     private int priceMax;
-    private Set<Integer> categories;
+
+    public PriceLimit() {
+    }
+
+    public PriceLimit(int priceMin, int priceMax) {
+        this.priceMin = priceMin;
+        this.priceMax = priceMax;
+    }
 
     public int getPriceMin() {
+
         return priceMin;
     }
 
@@ -21,13 +27,5 @@ public class ArticleFilter {
 
     public void setPriceMax(int priceMax) {
         this.priceMax = priceMax;
-    }
-
-    public Set<Integer> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Integer> categories) {
-        this.categories = categories;
     }
 }
