@@ -1,7 +1,6 @@
 package sombra.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import sombra.dao.ArticlesDAO;
 import sombra.dao.RolesDAO;
@@ -14,7 +13,6 @@ import java.util.Date;
 @Service
 public class UserService {
 
-    @Qualifier("UsersDAO")
     @Autowired
     UsersDAO usersDAO;
 

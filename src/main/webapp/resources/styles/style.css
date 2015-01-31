@@ -61,3 +61,20 @@ table#bill thead tr td, table#bill tfoot tr td{
 table#bill tfoot tr td{
 
 }
+
+li{
+    list-style-type: none;
+}
+
+li span i {
+    cursor: pointer;
+}
+
+.tree-item{
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.tree > ul{
+    padding-left: 0
+}

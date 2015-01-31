@@ -12,7 +12,11 @@
                 <h3 class="panel-title">Фільтр</h3>
             </div>
             <div class="panel-body">
-                Panel content
+                <div class="tree">
+                    <ul id="categories">
+
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

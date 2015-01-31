@@ -74,8 +74,25 @@ If user isn't logged will be loaded basket info from session
 jQuery(document).ready(function(){
     getArticles();
     updateBasket();
+    initCategories();
 });
 
+function initTree(){
+    jQuery('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    jQuery('.tree  ul li.parent_li span i.glyphicon').on('click', function (e) {
+        var children = jQuery(this).parents().eq(1).find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            jQuery(this).addClass('glyphicon-plus-sign').removeClass('glyphicon-minus-sign');
+        } else {
+            children.show('fast');
+            jQuery(this).addClass('glyphicon-minus-sign').removeClass('glyphicon-plus-sign');
+        }
+        e.stopPropagation();
+    });
+}
+
+//.tree ul li.parent_li span i.glyphicon.glyphicon-minus-sign
 /*
 Set paginator on new page(by click on page number, previous or next page)
 Load data for new page
@@ -200,3 +217,41 @@ function articleDetails(id){
     window.location.assign("/articles/details");
 }
 
+function initCategories(){
+    var container = jQuery("#categories");
+    jQuery.ajax({
+        url: getHomeUrl()+"articles/categories",
+        type: "GET",
+        dataType: "json",
+        statusCode: {
+           200: function(data){
+               for(var i = 0; i < data.length; i++){
+                   addCategory(container, data[i])
+               }
+               initTree();
+           }
+        }
+    })
+}
+
+function addCategory(container, category){
+    var treeElementHeaderHtml = '<span>' +
+                                    '<i class="glyphicon glyphicon-minus-sign"></i>' +
+                                    '<span class="tree-item">' +
+                                        '<input type="checkbox" style="margin-right: 5px">' + category.name +
+                                    '</span>' +
+                                '</span>';
+    var treeElementHeader = jQuery.parseHTML(treeElementHeaderHtml);
+
+    var childCategoriesContainer ;
+    if(category.categories.length != 0){
+        var childCategoriesContainer = jQuery.parseHTML("<ul></ul>");
+        for(var i = 0; i < category.categories.length; i++){
+            addCategory(childCategoriesContainer, category.categories[i])
+        }
+    }
+    var treeElement = jQuery.parseHTML("<li></li>");
+    jQuery(treeElement).append(treeElementHeader);
+    jQuery(treeElement).append(childCategoriesContainer);
+    jQuery(container).append(treeElement);
+}
