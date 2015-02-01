@@ -53,6 +53,9 @@ function initBasket(){
         statusCode: {
             200: function(data){
                 jQuery("#fullPrice").text(data.price + '$');
+                if(data.price == 0){
+                    jQuery("#orderButton").prop("disabled", "true")
+                }
                 for(var key in data.articles){
                     if(data.articles.hasOwnProperty(key)){
                         getArticleElement(key, data.articles[key])
@@ -68,7 +71,7 @@ Send request to get article with given id
 */
 function getArticleElement(id, count){
     jQuery.ajax({
-        url: getHomeUrl() +  "articles/"+id,
+        url: getHomeUrl() +  "articles/"+id + "/json",
         type: "GET",
         dataType: "json",
         statusCode: {

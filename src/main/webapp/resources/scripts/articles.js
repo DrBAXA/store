@@ -91,6 +91,5 @@ On click "datais..." id of article that was clicked writes to cookies
  and redirect to article details page
 */
 function articleDetails(id){
-    jQuery.cookie("articleId", id);
-    window.location.assign("/articles/details");
+    window.location.assign("/articles/" + id);
 }
