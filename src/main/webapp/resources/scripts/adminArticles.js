@@ -120,7 +120,7 @@ function deleteArticle(id){
             },
             406: function(){
                 $("#questionModal").modal("hide");
-                showAlert("alert alert-вфтпук alert-message", "Не можливо видалити товар." +
+                showAlert("alert alert-danger alert-message", "Не можливо видалити товар." +
                                                               " Він знаходиться в замовленні користувача. " +
                                                               "Закрийте спочатку всі замовлення в яких міститься даний товар");
                 getArticles();
@@ -136,7 +136,6 @@ function showAlert(className, html) {
     $("#resultDefinition").empty();
     $("#resultDefinition").append(html);
     $("#message").slideDown(500);
-    setTimeout(hideAlert, 8000)
 }
 //hide alert about result of operation
 function hideAlert(){

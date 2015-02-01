@@ -3,6 +3,7 @@ package sombra.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import sombra.util.FilterOrder;
 import sombra.util.PaginationResult;
 import sombra.util.PriceLimit;
 
-import javax.persistence.PersistenceException;
 import java.security.Principal;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class ArticleController {
     public ResponseEntity<Void> daleteArticle(@PathVariable("id") int id){
         try {
             articlesService.deleteArticle(id);
-        }catch (PersistenceException pe){
+        }catch (JpaSystemException pe){
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity<>(HttpStatus.OK);
