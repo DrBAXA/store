@@ -10,7 +10,7 @@ public class LoginController {
     @RequestMapping(value = "/login")
     public String login(@RequestParam(value = "error", required = false, defaultValue = "0") int error, ModelMap model) {
         if (error != 0) {
-            model.addAttribute("error");
+            model.addAttribute("error","error");
         }
         return "login";
     }

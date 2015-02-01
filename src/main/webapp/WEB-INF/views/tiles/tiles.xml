@@ -23,4 +23,8 @@
         <put-attribute name="content" value="/WEB-INF/views/basket.jsp"/>
     </definition>
 
+    <definition name="admin" extends="baseTemplate">
+        <put-attribute name="content" value="/WEB-INF/views/tiles/template/adminTemplate.jsp"/>
+    </definition>
+
 </tiles-definitions>

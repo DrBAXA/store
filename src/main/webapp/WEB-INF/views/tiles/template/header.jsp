@@ -36,6 +36,9 @@
             <sec:authorize access="isAnonymous()">
                 <p class="navbar-text navbar-right"><a href="/login">увійти</a></p>
             </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+                <p class="navbar-text navbar-right"><a href="/signup">зареєструватись</a></p>
+            </sec:authorize>
         </div>
     </div>
 </nav>
