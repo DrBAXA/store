@@ -16,4 +16,5 @@ public interface ArticlesDAO extends CrudRepository<Article, Integer>{
 
     @Query(value = "SELECT * FROM articles WHERE category IN ?1 AND price >= ?2 AND price <= ?3", nativeQuery = true)
     Iterable<Article> getByFilter(Collection<Integer> categories, int minPrice, int maxPrice);
+
 }

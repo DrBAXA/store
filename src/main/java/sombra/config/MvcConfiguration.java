@@ -2,6 +2,7 @@ package sombra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -38,6 +39,16 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 		resolver.setSuffix(".jsp");
 		resolver.setOrder(2);
 		return resolver;
+	}
+
+	public static final int MAX_UPLOAD_SIZE = 10*1024*1024;//10 MB
+
+	@Bean
+	public CommonsMultipartResolver  multipartResolver(){
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setDefaultEncoding("utf-8");
+		multipartResolver.setMaxUploadSize(MAX_UPLOAD_SIZE);
+		return multipartResolver;
 	}
 	
 	@Override

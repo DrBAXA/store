@@ -24,6 +24,10 @@ public class ArticlesService {
     @Autowired
     CategoriesDAO categoriesDAO;
 
+    public void update(Article article){
+            articlesDAO.save(article);
+    }
+
     public PaginationResult getAll(FilterOrder filterOrder){
         PaginationResult result = new PaginationResult();
         List<Article> allArticles = new ArrayList<>();
@@ -48,6 +52,16 @@ public class ArticlesService {
         return articlesDAO.findOne(id);
     }
 
+    public PriceLimit getPriseLimit(ArticleFilter filter){
+        int max = articlesDAO.getMaxPrice(filter.getCategories());
+        int min = articlesDAO.getMinPrice(filter.getCategories());
+        return new PriceLimit(min, max);
+    }
+
+    public void deleteArticle(int id){
+        articlesDAO.delete(id);
+    }
+
     public List<Category> getRootCategories(){
         List<Category> categories = new LinkedList<>();
         for(Category category : categoriesDAO.getRootCategories()){
@@ -56,10 +70,8 @@ public class ArticlesService {
         return categories;
     }
 
-    public PriceLimit getPriseLimit(ArticleFilter filter){
-        int max = articlesDAO.getMaxPrice(filter.getCategories());
-        int min = articlesDAO.getMinPrice(filter.getCategories());
-        return new PriceLimit(min, max);
+    public List<Category> getAllCategories(){
+        return IteratorUtils.toList(categoriesDAO.findAll().iterator());
     }
 
 }

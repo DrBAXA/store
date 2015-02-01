@@ -4,12 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sombra.entity.Article;
 import sombra.entity.Category;
 import sombra.service.ArticlesService;
-import sombra.util.*;
+import sombra.util.ArticleFilter;
+import sombra.util.FilterOrder;
+import sombra.util.PaginationResult;
+import sombra.util.PriceLimit;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Controller
@@ -25,9 +32,21 @@ public class ArticleRESTController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping("/{id}")
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Article> getArticle(@PathVariable("id") int id){
         return new ResponseEntity<>(articlesService.getArticle(id),HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> daleteArticle(@PathVariable("id") int id){
+        try {
+            articlesService.deleteArticle(id);
+        }catch (PersistenceException pe){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping("/categories")
@@ -37,7 +56,6 @@ public class ArticleRESTController {
 
     @RequestMapping(value = "price_limit", method = RequestMethod.POST)
     public ResponseEntity<PriceLimit> getPriceLimit(@RequestBody ArticleFilter filter){
-        //articlesService.getPriseLimit(filter);
         return new ResponseEntity<PriceLimit>(articlesService.getPriseLimit(filter), HttpStatus.OK);
     }
 }

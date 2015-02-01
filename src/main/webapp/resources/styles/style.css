@@ -1,10 +1,11 @@
-.order-element:hover{
+.order-element{
     cursor: pointer;
+    margin-left: 15px;
 }
 
 .price-text, .price{
     color: #5cb85c;
-    font-size: x-large;
+
 }
 
 .price{
@@ -85,4 +86,19 @@ li span i {
 
 .category-checker{
     margin-right: 5px;
+}
+
+.alert-message{
+    position: static;
+    bottom:0%;
+    width: 100%;
+
+}
+
+.btn-file { position: relative; overflow: hidden; margin-right: 4px; }
+.btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
+.clearfix{
+    text-align: center;
+    margin-top: 20px;
 }

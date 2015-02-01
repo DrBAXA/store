@@ -15,6 +15,7 @@ public class BasketController {
         if(user != null){
             modelMap.addAttribute("user", user.getName());
         }
+        modelMap.addAttribute("active", "basket");
         return "basket";
     }
 }

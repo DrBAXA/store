@@ -27,6 +27,15 @@
                         (<i id="basketPrice" class="price-text"></i>)
                     </a>
                 </li>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <li class="admin">
+                    <a class="navbar-link" href="/admin/articles">
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        Адміністрування
+                        <i class="price-text"></i>
+                    </a>
+                </li>
+                </sec:authorize>
             </ul>
             <sec:authorize access="isAuthenticated()">
                 <p class="navbar-text navbar-right">

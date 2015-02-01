@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-slider.css">
 <script type="application/javascript" src="<c:url value="/resources"/>/bootstrap/js/bootstrap-slider.js" ></script>
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/basket.js" ></script>
+<script type="application/javascript" src="<c:url value="/resources"/>/scripts/filter.js" ></script>
+<script type="application/javascript" src="<c:url value="/resources"/>/scripts/order.js" ></script>
 <script type="application/javascript" src="<c:url value="/resources"/>/scripts/articles.js" ></script>
 <div class="row">
     <div class="col-lg-3">

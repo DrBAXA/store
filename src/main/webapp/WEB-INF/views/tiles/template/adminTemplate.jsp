@@ -1,6 +1,27 @@
-<ul class="nav nav-pills">
-  <li role="presentation" class="disabled"><a href="#">Home</a></li>
-  <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="#">Messages</a></li>
-</ul>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!Doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<c:url value="/resources"/>/bootstrap/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="<c:url value="/resources"/>/styles/style.css">
+  <script src="<c:url value="/resources"/>/jQuery/jquery.min.js"></script>
+  <script src="<c:url value="/resources"/>/jQuery/jquery.cookie.js"></script>
+  <script src="<c:url value="/resources"/>/bootstrap/js/bootstrap.min.js"></script>
+  <title>Sombra store</title>
+</head>
+<body>
+<div class="container">
+  <tiles:insertAttribute name="header"/>
+  <tiles:insertAttribute name="adminNav"/>
+  <div>
+    <tiles:insertAttribute name="adminPageContent"/>
+  </div>
+  <tiles:insertAttribute name="footer"/>
+</div>
+</body>
+</html>
 
