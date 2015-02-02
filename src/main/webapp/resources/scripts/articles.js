@@ -71,7 +71,7 @@ Add article to page
 function addArticle(article){
     var articleElement = '<div class="col-sm-6 col-md-4">' +
                               '<div class="thumbnail" style="min-height: 485px">' +
-                                   '<img src="/resources/img/' + article.photo + '"/>' +
+                                   '<img src="' + getHomeUrl() + 'resources/img/' + article.photo + '"/>' +
                                    '<div class="caption">' +
                                         '<h3>' + article.name + '</h3>' +
                                         '<div class="description">' + article.description + '</div>' +
@@ -91,5 +91,5 @@ On click "datais..." id of article that was clicked writes to cookies
  and redirect to article details page
 */
 function articleDetails(id){
-    window.location.assign("/articles/" + id);
+    window.location.assign(getHomeUrl + "articles/" + id);
 }

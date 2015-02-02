@@ -15,7 +15,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Sombra store</a>
+            <a class="navbar-brand" href="<c:url value="/"/>">Sombra store</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -39,14 +39,14 @@
             </ul>
             <sec:authorize access="isAuthenticated()">
                 <p class="navbar-text navbar-right">
-                    Ви увійшли як <a href="#">${user}</a>(<a href="/logout">вийти</a>)
+                    Ви увійшли як <a href="#">${user}</a>(<a href="<c:url value="/"/>logout">вийти</a>)
                 </p>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <p class="navbar-text navbar-right"><a href="/login">увійти</a></p>
+                <p class="navbar-text navbar-right"><a href="<c:url value="/"/>login">увійти</a></p>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <p class="navbar-text navbar-right"><a href="/signup">зареєструватись</a></p>
+                <p class="navbar-text navbar-right"><a href="<c:url value="/"/>signup">зареєструватись</a></p>
             </sec:authorize>
         </div>
     </div>

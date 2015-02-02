@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sombra.entity.Article;
 import sombra.entity.Category;
 import sombra.service.ArticlesService;
@@ -15,7 +18,6 @@ import sombra.util.FilterOrder;
 import sombra.util.PaginationResult;
 import sombra.util.PriceLimit;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -33,11 +35,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public String getArticle(@PathVariable("id") int id,
-                             ModelMap modelMap,
-                             Principal user){
-        if(user != null){
-            modelMap.addAttribute("user", user.getName());
-        }
+                             ModelMap modelMap){
         modelMap.addAttribute("article",articlesService.getArticle(id));
         return "article";
     }
