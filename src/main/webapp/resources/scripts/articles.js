@@ -91,5 +91,5 @@ On click "datais..." id of article that was clicked writes to cookies
  and redirect to article details page
 */
 function articleDetails(id){
-    window.location.assign(getHomeUrl + "articles/" + id);
+    window.location.assign(getHomeUrl() + "articles/" + id);
 }
