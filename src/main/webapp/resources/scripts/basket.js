@@ -87,7 +87,7 @@ Add article element received from server to basket page
 */
 function addArticleElement(article, count){
     var element = '<div class="media">' +
-                      '<div class="media-left">' +
+                      '<div class="block">' +
                           '<button type="button" class="btn btn-danger btn-sm" onclick="deleteFromBasket(' + article.id + ')">' +
                               '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                           '</button>' +
@@ -95,11 +95,11 @@ function addArticleElement(article, count){
                               '<img class="media-object" src="/resources/img/' + article.photo + '" style="height: 128px;vertical-align: top">' +
                           '</a>' +
                       '</div>' +
-                      '<div class="media-body">' +
+                      '<div class="block-center">' +
                           '<h4 class="media-heading">' + article.name + '</h4>' +
                           '<p class="price price-text">' + article.price + ' грн.</p>' +
                       '</div>' +
-                      '<div class="media-right" style="padding-left: 160%">' +
+                      '<div class="block">' +
                           '<h4 class="media-heading">Кількість</h4>' +
                           '<p class="price price-text">' + count + '</p>' +
                       '</div>' +

@@ -111,3 +111,13 @@ li span i {
     width: 89%;
     margin-left: 10px;
 }
+
+.block{
+    width: 25%;
+    display: inline-block;
+    min-width: 200px;
+}
+.block-center{
+    width: 50%;
+    display: inline-block;
+}
