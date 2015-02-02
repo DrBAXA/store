@@ -12,8 +12,7 @@ import sombra.service.ArticlesService;
 import sombra.service.CategoryBinder;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static sombra.util.ImageSaver.saveImage;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin/articles")
@@ -23,6 +22,11 @@ public class AdminController {
     ArticlesService articlesService;
     @Autowired
     CategoryBinder categoryBinder;
+
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(Category.class, categoryBinder);
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAdminPage(ModelMap modelMap){
@@ -40,25 +44,24 @@ public class AdminController {
         return "adminArticle";
     }
 
-    @InitBinder
-    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-        binder.registerCustomEditor(Category.class, categoryBinder);
+    @RequestMapping(value = "/new",method = RequestMethod.GET)
+    public String newArticle(ModelMap modelMap,
+                             Principal user){
+        if(user != null){
+            modelMap.addAttribute("user", user.getName());
+        }
+        modelMap.addAttribute("categories", articlesService.getAllCategories());
+        modelMap.addAttribute("article", new Article());
+        return "adminArticle";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String saveUser(@PathVariable("id") int id,
+    public String saveArticle(@PathVariable("id") int id,
                            Article article,
                            @RequestParam(value = "image", required = false) MultipartFile image,
                            HttpServletRequest request, ModelMap model) {
-        Article oldArticle = articlesService.getArticle(id);
-        if (! image.isEmpty()) {
-            article.setPhoto(image.getOriginalFilename());
-            saveImage(image, request);
-        } else {
-            article.setPhoto(oldArticle.getPhoto());
-        }
-        articlesService.update(article);
-        return "adminArticles";
+        articlesService.saveOrUpdate(article, image);
+        return "redirect:/admin/articles/"+article.getId();
     }
 
 }

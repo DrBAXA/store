@@ -155,7 +155,7 @@ function initBasket(){
         dataType: "json",
         statusCode: {
             200: function(data){
-                jQuery("#fullPrice").text(data.price + '$');
+                jQuery("#fullPrice").text(data.price + ' грн.');
                 for(var key in data.articles){
                     if(data.articles.hasOwnProperty(key)){
                         getArticleElement(key, data.articles[key])

@@ -1,24 +1,27 @@
 package sombra.util;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 
+@Service
 public class ImageSaver {
-
-    public static final String RESOURCES_FOLDER = "\\resources\\img\\";
-
     private static final Logger logger = Logger.getLogger(ImageSaver.class.getName());
 
-    public static void saveImage(MultipartFile image, HttpServletRequest request) {
-        String path = request.getSession().getServletContext().getRealPath("/") + RESOURCES_FOLDER;
-        File file = new File(path + image.getOriginalFilename());
+    @Autowired
+    ServletContext servletContext;
+
+    public void saveImage(MultipartFile image){
         try {
-            FileUtils.writeByteArrayToFile(file, image.getBytes());
+            String path = servletContext.getRealPath("resources\\img");
+            File file = new File(path + "\\" + image.getOriginalFilename());
+            image.transferTo(file);
+            //FileUtils.writeByteArrayToFile(file, image.getBytes());
         } catch (IOException ioe) {
             logger.error(ioe.getMessage());
             logger.debug(ioe, ioe);

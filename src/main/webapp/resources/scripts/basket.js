@@ -37,7 +37,7 @@ function fillBasketInfo(data){
         }
     }
     jQuery("#basketCount").text(count);
-    jQuery("#basketPrice").text(data.price+'$');
+    jQuery("#basketPrice").text(data.price+' грн.');
 }
 
 /*
@@ -52,7 +52,7 @@ function initBasket(){
         dataType: "json",
         statusCode: {
             200: function(data){
-                jQuery("#fullPrice").text(data.price + '$');
+                jQuery("#fullPrice").text(data.price + ' грн.');
                 if(data.price == 0){
                     jQuery("#orderButton").prop("disabled", "true")
                 }
@@ -97,7 +97,7 @@ function addArticleElement(article, count){
                       '</div>' +
                       '<div class="media-body">' +
                           '<h4 class="media-heading">' + article.name + '</h4>' +
-                          '<p class="price price-text">' + article.price + '$</p>' +
+                          '<p class="price price-text">' + article.price + ' грн.</p>' +
                       '</div>' +
                       '<div class="media-right" style="padding-left: 160%">' +
                           '<h4 class="media-heading">Кількість</h4>' +
@@ -146,7 +146,7 @@ function buyWindow(){
         statusCode: {
             200: function(data){
                 jQuery("#bill-positions").empty();
-                jQuery("#fullBill").text(data.price);
+                jQuery("#fullBill").text(data.price + ' грн.');
                 var i = 1;
                 for(var key in data.articles){
                     if(data.articles.hasOwnProperty(key)){
@@ -167,7 +167,7 @@ function fillUserData(user){
 
 function getBillElement(id, count, position){
     jQuery.ajax({
-        url: getHomeUrl() +  "articles/"+id,
+        url: getHomeUrl() +  "articles/"+id+'/json',
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -183,7 +183,7 @@ function addToBill(article, count, position){
                           '<td>' + position + '</td>' +
                           '<td>' + article.name + '</td>' +
                           '<td>' + count + '</td>' +
-                          '<td>' + article.price + '</td>' +
+                          '<td align="right" width="100px">' + article.price + ' грн.</td>' +
                       '</tr>';
     jQuery("#bill-positions").append(jQuery.parseHTML(billElement));
 }

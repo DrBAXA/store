@@ -16,7 +16,8 @@
 }
 
 .price-right{
-    float: right;
+    position: absolute;
+    right: 15px;
 }
 
 .description{
@@ -101,4 +102,12 @@ li span i {
 .clearfix{
     text-align: center;
     margin-top: 20px;
+}
+
+.article-control{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 30px;
+    width: 89%;
+    margin-left: 10px;
 }

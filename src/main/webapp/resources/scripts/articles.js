@@ -70,18 +70,18 @@ Add article to page
 */
 function addArticle(article){
     var articleElement = '<div class="col-sm-6 col-md-4">' +
-                              '<div class="thumbnail">' +
+                              '<div class="thumbnail" style="min-height: 485px">' +
                                    '<img src="/resources/img/' + article.photo + '"/>' +
                                    '<div class="caption">' +
                                         '<h3>' + article.name + '</h3>' +
                                         '<div class="description">' + article.description + '</div>' +
                                         '<p><a href="#" onclick="articleDetails(' + article.id + ')">детальніше...</a></p>' +
-                                        '<p><a href="#" onclick="addToBasket(' + article.id + ')" class="btn btn-lg btn-success" role="button">' +
-                                             '<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>' +
-                                             'Купити' +
-                                        '</a><span class="price price-right">' + article.price + '$</span></p>' +
                                    '</div>' +
                               '</div>' +
+                              '<div class="article-control"><a href="#" onclick="addToBasket(' + article.id + ')" class="btn btn btn-success" role="button">' +
+                                  '<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>' +
+                                  'Купити' +
+                              '</a><span class="price price-right">' + article.price + ' грн.</span></div>' +
                          '</div>';
     jQuery("#articlesContainer").append(jQuery.parseHTML(articleElement));
 }

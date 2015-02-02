@@ -4,6 +4,7 @@ package sombra.service;
 import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sombra.comparator.article.ArticleComparatorFactory;
 import sombra.dao.ArticlesDAO;
 import sombra.dao.CategoriesDAO;
@@ -23,8 +24,21 @@ public class ArticlesService {
     ArticlesDAO articlesDAO;
     @Autowired
     CategoriesDAO categoriesDAO;
+    @Autowired
+    ImageSaver imageSaver;
 
-    public void update(Article article){
+    public static final String DEFAULT_ARTICLE_PHOTO = "default.png";
+
+    public void saveOrUpdate(Article article, MultipartFile image){
+        Article oldArticle = getArticle(article.getId());
+        if (! image.isEmpty()) {
+            article.setPhoto(image.getOriginalFilename());
+            imageSaver.saveImage(image);
+        } else if(oldArticle != null){
+            article.setPhoto(oldArticle.getPhoto());
+        } else {
+            article.setPhoto(DEFAULT_ARTICLE_PHOTO);
+        }
             articlesDAO.save(article);
     }
 
