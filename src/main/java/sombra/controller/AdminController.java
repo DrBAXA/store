@@ -12,7 +12,6 @@ import sombra.service.ArticlesService;
 import sombra.service.CategoryBinder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin/articles")
@@ -45,11 +44,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/new",method = RequestMethod.GET)
-    public String newArticle(ModelMap modelMap,
-                             Principal user){
-        if(user != null){
-            modelMap.addAttribute("user", user.getName());
-        }
+    public String newArticle(ModelMap modelMap){
+        modelMap.addAttribute("active", "admin");
+        modelMap.addAttribute("disabled", "articles");
         modelMap.addAttribute("categories", articlesService.getAllCategories());
         modelMap.addAttribute("article", new Article());
         return "adminArticle";
@@ -58,8 +55,7 @@ public class AdminController {
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String saveArticle(@PathVariable("id") int id,
                            Article article,
-                           @RequestParam(value = "image", required = false) MultipartFile image,
-                           HttpServletRequest request, ModelMap model) {
+                           @RequestParam(value = "image", required = false) MultipartFile image) {
         articlesService.saveOrUpdate(article, image);
         return "redirect:/admin/articles/"+article.getId();
     }

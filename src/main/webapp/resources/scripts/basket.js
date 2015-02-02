@@ -3,7 +3,7 @@ Send request to add article with given id to user's basket
 */
 function addToBasket(id){
     jQuery.ajax({
-        url: getHomeUrl() + "users/basket/"+id,
+        url: getHomeUrl() + "basket/"+id,
         type: "PUT",
         statusCode: {
             202: updateBasket
@@ -17,7 +17,7 @@ Basket data is summary price and array with articles id
 */
 function updateBasket(){
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket_info",
+        url: getHomeUrl() +  "basket/info",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -47,7 +47,7 @@ Fill basket page
 function initBasket(){
     jQuery("#basket").empty();
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket_info",
+        url: getHomeUrl() +  "basket/info",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -113,7 +113,7 @@ Send request to delete article from user's basket and update data in header and 
 */
 function deleteFromBasket(id){
     jQuery.ajax({
-        url: getHomeUrl() + "users/basket/"+id,
+        url: getHomeUrl() + "basket/"+id,
         type: "DELETE",
         async: false,
         dataType: "json"
@@ -140,7 +140,7 @@ function buyWindow(){
 
     //send request for basket data
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket_info",
+        url: getHomeUrl() +  "basket/info",
         type: "GET",
         dataType: "json",
         statusCode: {
@@ -224,7 +224,7 @@ function doBuy(){
         phone : jQuery("#phone").val()
     };
     jQuery.ajax({
-        url: getHomeUrl() +  "users/basket/buy",
+        url: getHomeUrl() +  "basket/buy",
         type: "POST",
         data : postData,
         dataType: "json",

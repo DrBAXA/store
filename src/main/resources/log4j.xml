@@ -12,13 +12,13 @@
 
     <!-- Services logs -->
     <logger name="sombra.service">
-        <level value="info"/>
+        <level value="dabug"/>
         <appender-ref ref="console"/>
     </logger>
 
     <!-- Spring logs -->
     <logger name="org.springframework">
-        <level value="warn" />
+        <level value="info" />
         <appender-ref ref="console"/>
     </logger>
 
