@@ -14,18 +14,21 @@ function initPriceFilter(){
         dataType: "json",
         statusCode: {
             200: function(data){
-                var minElementValue = jQuery("#priceFilter").attr("value").split(",")[0]
+                var filterElement = jQuery("#priceFilter");
+                var minElementValue = jQuery(filterElement).attr("value").split(",")[0];
                 var minValue = (minElementValue  == "") || (minElementValue  == undefined) ? data.priceMin : minElementValue*1;
-                var maxElementValue = jQuery("#priceFilter").attr("value").split(",")[1]
+                var maxElementValue = jQuery(filterElement).attr("value").split(",")[1];
                 var maxValue = (maxElementValue  == "") || (maxElementValue  == undefined) ? data.priceMax : maxElementValue*1;
-                jQuery("#priceFilter").slider("destroy");
-                jQuery("#priceFilter").slider({
-                    tooltip: 'always',
-                    value: [ minValue , maxValue],
-                    min: data.priceMin,
-                    max: data.priceMax
-                });
-
+                try{
+                    jQuery(filterElement).slider("destroy")
+                }finally {
+                    jQuery(filterElement).slider({
+                        tooltip: 'always',
+                        value: [minValue, maxValue],
+                        min: data.priceMin,
+                        max: data.priceMax
+                    });
+                }
             }
         }
     })

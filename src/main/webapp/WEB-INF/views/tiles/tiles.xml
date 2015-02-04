@@ -40,4 +40,8 @@
         <put-attribute name="adminPageContent" value="/WEB-INF/views/adminArticle.jsp"/>
     </definition>
 
+    <definition name="adminOrders" extends="adminTemplate">
+        <put-attribute name="adminPageContent" value="/WEB-INF/views/adminOrders.jsp"/>
+    </definition>
+
 </tiles-definitions>

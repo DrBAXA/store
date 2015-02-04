@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="basket">
-                    <a class="navbar-link" href="<c:url value="/"/>/basket">
+                    <a class="navbar-link" href="<c:url value="/"/>basket">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                         Корзина
                         <strong id="basketCount"></strong>
@@ -29,7 +29,7 @@
                 </li>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li class="admin">
-                    <a class="navbar-link" href="<c:url value="/"/>/admin/articles">
+                    <a class="navbar-link" href="<c:url value="/"/>admin/articles">
                         <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                         Адміністрування
                         <i class="price-text"></i>

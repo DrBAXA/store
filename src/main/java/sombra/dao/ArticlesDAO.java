@@ -2,12 +2,12 @@ package sombra.dao;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import sombra.entity.Article;
 
 import java.util.Collection;
-import java.util.List;
 
-public interface ArticlesDAO extends CrudRepository<Article, Integer>{
+public interface ArticlesDAO extends CrudRepository<Article, Integer> {
     @Query(value = "SELECT max(price) FROM  articles WHERE category IN ?1", nativeQuery = true)
     int getMaxPrice(Collection<Integer> categories);
 

@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Map;
 
+enum OrderState{
+    READY, DONE, CANCELED;
+}
+
 @Entity
 @Table(name="orders")
 public class Order {
@@ -25,13 +29,53 @@ public class Order {
     private Map<Article, Integer> orderMap;
 
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
+    @Enumerated(EnumType.ORDINAL)
+    private OrderState state;
+
+    @Column
+    private int price;
+
+    public Order() {
+    }
 
     public Order(String email, String phone, Map<Article, Integer> orderMap) {
         this.userEmail = email;
         this.userPhone = phone;
         this.orderMap = orderMap;
+        this.state = OrderState.READY;
         this.date = new Date();
+        int price = 0;
+        for(Article article : orderMap.keySet()){
+            price += article.getPrice()*orderMap.get(article);
+        }
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public OrderState getState() {
+        return state;
+    }
+
+    public void setState(OrderState state) {
+        this.state = state;
     }
 
     public String getUserEmail() {

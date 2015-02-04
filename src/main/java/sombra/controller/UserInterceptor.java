@@ -21,7 +21,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
                              Object handler, ModelAndView modelAndView) throws Exception {
         logger.debug("Adding user name after controller " + handler.toString());
         Object  uncastUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(uncastUser instanceof User){
+        if((uncastUser instanceof User) && (modelAndView != null)){
             modelAndView.getModelMap().addAttribute("user", ((User)uncastUser).getUsername());
         }
     }
